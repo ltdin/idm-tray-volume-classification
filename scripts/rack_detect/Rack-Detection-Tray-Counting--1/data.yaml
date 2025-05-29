@@ -1,0 +1,12 @@
+names:
+- rack
+nc: 1
+roboflow:
+  license: CC BY 4.0
+  project: rack-detection-tray-counting
+  url: https://universe.roboflow.com/l-thnh-vinh-j9hig/rack-detection-tray-counting/dataset/1
+  version: 1
+  workspace: l-thnh-vinh-j9hig
+test: ../test/images
+train: ../train/images
+val: ../valid/images
