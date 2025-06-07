@@ -1,7 +1,7 @@
 import os
 import csv
 
-dataset_path = "../volume_trays/volume_dataset/"  
+dataset_path = "../volume_trays/dataset_preprocessed/"  
 output_csv = "../volume_trays/csv/volume_labels.csv"
 
 with open(output_csv, mode='w', newline='') as file:
@@ -21,5 +21,5 @@ with open(output_csv, mode='w', newline='') as file:
             continue
 
         for fname in os.listdir(folder_path):
-            if fname.lower().endswith('.png'):
+            if fname.lower().endswith(('.png', '.jpg', '.jpeg')):
                 writer.writerow([f"{volume_folder}/{fname}", label])

@@ -5,10 +5,9 @@ import pandas as pd
 from ultralytics import YOLO
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import img_to_array
-from PIL import Image, ImageDraw, ImageFont
 
 # Load models 
-yolo_model = YOLO("../runs/train/tray_detector/weights/best.pt") 
+yolo_model = YOLO("../rack_detect/results/tray_detector/weights/best.pt") 
 cnn_model = load_model("../../weights/volume_cnn_model.h5") 
 
 # Input image 
@@ -19,12 +18,6 @@ rgb_img = cv2.cvtColor(original, cv2.COLOR_BGR2RGB)
 # YOLOv8 detect
 results = yolo_model.predict(image_path, imgsz=448, conf=0.4)[0]
 boxes = results.boxes.xyxy.cpu().numpy()
-
-# Prepare annotated image
-annotated = Image.fromarray(rgb_img)
-draw = ImageDraw.Draw(annotated)
-font_path = "arial.ttf"  
-font = ImageFont.truetype(font_path, size=100)  # Large readable font
 
 volume_data = []
 
@@ -44,27 +37,14 @@ for i, box in enumerate(boxes):
         pred = cnn_model.predict(input_img)[0][0] * 100
         pred = np.clip(pred, 0, 100)
 
-        # Draw bounding box
-        draw.rectangle([x1, y1, x2, y2], outline="blue", width=10)
-
-        # Prepare label
+        # Draw bounding box and label using cv2
         label = f"Rack: {pred:.2f}%"
+        color = (255, 0, 0)  # Blue in BGR
 
-        # Get label size
-        text_bbox = draw.textbbox((x1, 0), label, font=font)
-        text_width = text_bbox[2] - text_bbox[0]
-        text_height = text_bbox[3] - text_bbox[1]
-
-        # Position above bounding box
-        padding = 20
-        text_y = max(0, y1 - text_height - padding)
-        text_bbox = draw.textbbox((x1, text_y), label, font=font)
-
-        # Draw label background
-        draw.rectangle(text_bbox, fill=(255, 255, 255))
-
-        # Draw label text
-        draw.text((x1, text_y), label, fill="blue", font=font)
+        cv2.rectangle(original, (x1, y1), (x2, y2), color, 4)
+        text_y = max(30, y1 - 10)
+        cv2.putText(original, label, (x1, text_y),
+                    cv2.FONT_HERSHEY_SIMPLEX, 1.2, color, 3)
 
         # Save prediction data
         volume_data.append({
@@ -79,7 +59,7 @@ for i, box in enumerate(boxes):
 
 # Save annotated image
 os.makedirs("output", exist_ok=True)
-annotated.save("../../scripts/predict/output/result.png")
+cv2.imwrite("../../scripts/predict/output/result.png", original)
 print("[OK] Annotated image saved to output/result.png")
 
 # Save CSV output

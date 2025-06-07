@@ -1,10 +1,10 @@
 task: detect
 mode: train
 model: yolov8n.pt
-data: ../Rack-Detection-Tray-Counting--1/data.yaml
-epochs: 50
+data: ../../data_preprocessed/data.yaml
+epochs: 100
 time: null
-patience: 5
+patience: 100
 batch: 8
 imgsz: 448
 save: true
@@ -12,8 +12,8 @@ save_period: -1
 cache: false
 device: cpu
 workers: 8
-project: runs/train
-name: tray_detector
+project: ../rack_detect/results
+name: train
 exist_ok: false
 pretrained: true
 optimizer: auto
@@ -102,4 +102,4 @@ auto_augment: randaugment
 erasing: 0.4
 cfg: null
 tracker: botsort.yaml
-save_dir: runs\train\tray_detector
+save_dir: ..\rack_detect\results\train

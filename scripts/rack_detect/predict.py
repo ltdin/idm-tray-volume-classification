@@ -9,7 +9,7 @@ output_dir = "outputs/inference"
 os.makedirs(output_dir, exist_ok=True)
 
 for filename in os.listdir(input_dir):
-    if filename.lower().endswith((".jpg", ".png")):
+    if filename.lower().endswith((".jpg", ".png", ".jpeg")):
         img_path = os.path.join(input_dir, filename)
         results = model(img_path)
         annotated = results[0].plot() 

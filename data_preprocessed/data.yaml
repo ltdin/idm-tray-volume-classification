@@ -1,0 +1,6 @@
+train: C:/Users/ADMIN/Documents/Study/Capstone A/Model/data_preprocessed/train/images
+val: C:/Users/ADMIN/Documents/Study/Capstone A/Model/data_preprocessed/valid/images
+test: C:/Users/ADMIN/Documents/Study/Capstone A/Model/data_preprocessed/test/images
+
+nc: 1
+names: ["rack"]
