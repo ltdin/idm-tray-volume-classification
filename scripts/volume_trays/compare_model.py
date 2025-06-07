@@ -36,4 +36,4 @@ for r in summary_results:
 
 # Highlight best MAE
 best_model = min(summary_results, key=lambda x: x["val_mae"])
-print(f"\n✅ Best model based on lowest validation MAE: {best_model['model']} ({best_model['val_mae']:.4f})")
+print(f"\n[OK] Best model based on lowest validation MAE: {best_model['model']} ({best_model['val_mae']:.4f})")
