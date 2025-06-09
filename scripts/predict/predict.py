@@ -7,11 +7,11 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import img_to_array
 
 # Load models 
-yolo_model = YOLO("../rack_detect/results/tray_detector/weights/best.pt") 
-cnn_model = load_model("../../weights/volume_cnn_model.h5") 
+yolo_model = YOLO("../rack_detect/results/train/weights/best.pt") 
+cnn_model = load_model("../../weights/volume_mobilenetv2_model.h5") 
 
 # Input image 
-image_path = "../../scripts/predict/input/Untitled design (1).png"
+image_path = "../../scripts/predict/input/z6656192617646_fc2e21de125013e5935519720e3a112d.jpg"
 original = cv2.imread(image_path)
 rgb_img = cv2.cvtColor(original, cv2.COLOR_BGR2RGB)
 
