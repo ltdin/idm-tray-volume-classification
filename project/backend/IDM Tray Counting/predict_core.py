@@ -11,10 +11,9 @@ import uuid
 yolo_model = YOLO("models/best.pt")
 cnn_model = load_model("models/volume_mobilenetv2_model.h5")
 
-def run_prediction(image_path):
+def run_prediction(image_path, prefix="rack", start_index=1):
     original = cv2.imread(image_path)
     rgb_img = cv2.cvtColor(original, cv2.COLOR_BGR2RGB)
-
     results = yolo_model.predict(image_path, imgsz=448, conf=0.4)[0]
     boxes = results.boxes.xyxy.cpu().numpy()
 
@@ -40,10 +39,10 @@ def run_prediction(image_path):
                         cv2.FONT_HERSHEY_SIMPLEX, 1.2, (255, 0, 0), 3)
 
             volume_data.append({
-                "rack_id": f"rack_{i+1}",
-                "bbox": [x1, y1, x2, y2],
-                "volume": round(float(pred), 2)
-            })
+            "rack_id": f"{prefix} No.{start_index + i}",
+            "bbox": [x1, y1, x2, y2],
+            "volume": round(float(pred), 2)
+        })
 
         except Exception as e:
             print(f"[ERROR] Error with box {i+1}: {e}")

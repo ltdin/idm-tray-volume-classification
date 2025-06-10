@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-export const sendPredictRequest = async (imageFile) => {
+export const sendPredictRequest = async (imageFiles) => {
   const formData = new FormData();
-  formData.append("images", imageFile);
+  imageFiles.forEach(file => formData.append("images", file));
 
   const response = await axios.post("http://localhost:5000/predict", formData, {
     headers: {

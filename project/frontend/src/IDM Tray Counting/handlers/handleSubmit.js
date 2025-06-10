@@ -1,14 +1,23 @@
-import { sendPredictRequest } from '../api/predict';
+import axios from 'axios';
 
-const handleSubmit = async (image, setResult) => {
-  if (!image) return;
-  const res = await sendPredictRequest(image);
-  
-  // Check if the response contains results
-  if (res.results && res.results.length > 0) {
-    setResult(res.results[0]);
-  } else {
-    setResult(null);
+const handleSubmit = async (images, setResult, rackIdText) => {
+  if (!images || images.length === 0) return;
+
+  const formData = new FormData();
+  images.forEach(file => formData.append('images', file));
+  formData.append('rack_id', rackIdText || 'rack');
+
+  try {
+    const res = await axios.post("http://localhost:5000/predict", formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+
+    setResult(res.data.results || []);
+  } catch (error) {
+    console.error("Prediction failed:", error);
+    setResult([]);
   }
 };
 

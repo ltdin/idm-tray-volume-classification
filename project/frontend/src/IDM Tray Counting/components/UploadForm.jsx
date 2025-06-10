@@ -2,9 +2,35 @@ import React from 'react';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import SearchIcon from '@mui/icons-material/Search';
 
-function UploadForm({ onImageChange, onSubmit }) {
+function UploadForm({ onRackIdImageChange, rackIdText, onImageChange, onSubmit }) {
   return (
     <div style={{ textAlign: 'center' }}>
+
+      <div style={{ marginBottom: '1rem' }}>
+        <label htmlFor="rack-id-upload"
+          style={{
+            padding: '0.6rem 1.2rem',
+            backgroundColor: '#28a745',
+            color: 'white',
+            border: 'none',
+            borderRadius: '8px',
+            cursor: 'pointer',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.5rem'
+          }}>
+          Upload Rack ID Image
+          <input
+            id="rack-id-upload"
+            type="file"
+            accept="image/*"
+            style={{ display: 'none' }}
+            onChange={(e) => onRackIdImageChange(e.target.files[0])}
+          />
+        </label>
+
+      </div>
+
       <label htmlFor="file-upload"
         style={{
           marginLeft: '1rem',
@@ -23,8 +49,9 @@ function UploadForm({ onImageChange, onSubmit }) {
           id="file-upload"
           type="file"
           accept="image/*"
+          multiple
           style={{ display: 'none' }}
-          onChange={(e) => onImageChange(e.target.files[0])}
+          onChange={(e) => onImageChange(Array.from(e.target.files))}
         />
       </label>
 

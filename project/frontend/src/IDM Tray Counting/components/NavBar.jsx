@@ -27,6 +27,7 @@ function NavBar({ activeTab, onTabChange }) {
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <div onClick={() => onTabChange('tray')} style={tabStyle('tray')}>IDM Tray Counting</div>
         <div onClick={() => onTabChange('kanban')} style={tabStyle('kanban')}>Kanban Checking</div>
+        <div onClick={() => onTabChange('ocr')} style={tabStyle('ocr')}>Rack OCR</div>
       </div>
     </div>
   );
