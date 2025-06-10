@@ -19,27 +19,23 @@ function App() {
 
       {activeTab === 'tray' ? (
         <div style={{ padding: '2rem', display: 'flex', gap: '2rem' }}>
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-            <div style={{ background: '#fff', padding: '2rem', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
-              <UploadForm
-                onImageChange={(file) => handleImageChange(file, setImage, setPreview, setResult)}
-                onSubmit={() => handleSubmit(image, setResult)}
-              />
-              {preview && <ImagePreview src={preview} />}
-            </div>
-
-            {result && (
-              <div style={{ background: '#fff', padding: '1rem', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
-                <AnnotatedResult imageUrl={result.annotated_path} />
-              </div>
-            )}
+          <div style={{ flex: 1, background: '#fff', padding: '2rem', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
+            <UploadForm
+              onImageChange={(file) => handleImageChange(file, setImage, setPreview, setResult)}
+              onSubmit={() => handleSubmit(image, setResult)}
+            />
+            {preview && <ImagePreview src={preview} />}
           </div>
 
           {result && (
-            <div style={{ flex: 1 }}>
-              <div style={{ background: '#fff', padding: '2rem', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
-                <ResultTable data={result.racks} />
-              </div>
+            <div style={{ flex: 1, background: '#fff', padding: '2rem', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
+              <AnnotatedResult imageUrl={result.annotated_path} />
+            </div>
+          )}
+
+          {result && (
+            <div style={{ flex: 1, background: '#fff', padding: '2rem', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
+              <ResultTable data={result.racks} />
             </div>
           )}
         </div>
