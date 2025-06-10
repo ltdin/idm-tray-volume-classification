@@ -16,7 +16,8 @@ npm start
 ### Structure
 - Create folder base on the structure below: 
 
-![alt text](image.png)
+<img src="https://i.postimg.cc/LXHDRBfN/image-2025-06-10-225339725.png" width="500"/>
+
 
 - Add 2 models to folder `models`:
   - `volume_mobilenetv2_model.h5`
