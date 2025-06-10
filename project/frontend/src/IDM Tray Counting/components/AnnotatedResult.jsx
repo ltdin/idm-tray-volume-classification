@@ -6,7 +6,7 @@ function AnnotatedResult({ imageUrl }) {
   return (
     <div style={{ marginTop: '1rem' }}>
       <h4>Annotated Result:</h4>
-      <img src={imageUrl} alt="Result" width={600} />
+      <img src={imageUrl} alt="Result" width={300} />
     </div>
   );
 }
