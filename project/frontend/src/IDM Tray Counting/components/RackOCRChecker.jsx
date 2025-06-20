@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import SearchIcon from '@mui/icons-material/Search';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutline';
+import Tooltip from '@mui/material/Tooltip';
 
 function RackOCRChecker() {
   const [image, setImage] = useState(null);
@@ -32,19 +36,49 @@ function RackOCRChecker() {
   };
 
   return (
-    <div style={{ maxWidth: 600, margin: '2rem auto', background: '#fff', padding: '2rem', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
-      <h3>Rack OCR Check</h3>
-
+    <div style={{ textAlign: 'center', position: 'relative', maxWidth: 600, margin: '2rem auto', background: '#fff', padding: '2rem', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
+        <div style={{ position: 'absolute', top: 10, left: 10 }}>
+        <Tooltip
+          title={
+            <span style={{ fontSize: '0.9rem'}}>
+              1. Click Upload Icon button to upload Rack's ID image.<br />
+              2. Field "Expected Rack ID..." is for entering the expected ID.<br />
+              3. Click Submit button to start prediction.
+            </span>
+          }
+          placement="right"
+          arrow
+        >
+          <InfoOutlinedIcon style={{ color: '#0068b5', cursor: 'pointer' }} />
+        </Tooltip>
+      </div>
+      <label htmlFor="file-upload"
+        style={{
+          marginLeft: '1rem',
+          padding: '0.6rem 1.2rem',
+          backgroundColor: '#0068b5',
+          color: 'white',
+          border: 'none',
+          borderRadius: '8px',
+          cursor: 'pointer',
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '0.5rem'
+        }}>
+      <CloudUploadIcon/>
+      
       <input
+        id="file-upload"
         type="file"
         accept="image/*"
         onChange={handleImageChange}
-        style={{ marginTop: '1rem' }}
+        style={{ display: 'none',marginTop: '1rem' }}
       />
+      </label>
 
       <input
         type="text"
-        placeholder="Expected Rack ID"
+        placeholder="Expected Rack ID..."
         value={expectedId}
         onChange={(e) => setExpectedId(e.target.value)}
         style={{ display: 'block', marginTop: '1rem', padding: '0.5rem', width: '100%' }}
@@ -53,7 +87,7 @@ function RackOCRChecker() {
       <button
         onClick={handleSubmit}
         disabled={loading}
-        style={{ marginTop: '1rem', padding: '0.6rem 1.2rem', backgroundColor: '#0068b5', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer' }}
+        style={{  marginLeft: '1rem', marginTop: '1rem', padding: '0.6rem 1.2rem', backgroundColor: '#0068b5', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer' }}
       >
         {loading ? 'Checking...' : 'Submit'}
       </button>

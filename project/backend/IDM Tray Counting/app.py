@@ -24,7 +24,7 @@ def predict():
     rack_id_prefix = request.form.get("rack_id", "rack")
     results = []
     
-    global_rack_counter = 1  # ✅ thêm dòng này
+    global_rack_counter = 1
 
     for file in files:
         filename = f"{uuid.uuid4().hex}.jpg"
@@ -32,7 +32,7 @@ def predict():
         file.save(upload_path)
 
         result = run_prediction(upload_path, prefix=rack_id_prefix, start_index=global_rack_counter)
-        global_rack_counter += len(result["racks"])  # tăng lên theo số lượng rack detect được
+        global_rack_counter += len(result["racks"])  
 
         result["filename"] = filename
         results.append(result)
