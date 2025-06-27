@@ -1,4 +1,3 @@
-import React from 'react';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import SearchIcon from '@mui/icons-material/Search';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutline';
