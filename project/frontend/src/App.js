@@ -8,9 +8,10 @@ import RackOCRChecker from './IDM Tray Counting/components/RackOCRChecker';
 import handleImageChange from './IDM Tray Counting/handlers/handleImageChange';
 import handleSubmit from './IDM Tray Counting/handlers/handleSubmit';
 import handleRackIdImageChange from './IDM Tray Counting/handlers/handleRackIdImageChange';
+import HomePage from './IDM Tray Counting/components/HomePage';
 
 function App() {
-  const [activeTab, setActiveTab] = useState('tray');
+  const [activeTab, setActiveTab] = useState('home');
   const [images, setImages] = useState([]);
   const [previews, setPreviews] = useState([]);
   const [results, setResults] = useState([]);
@@ -90,6 +91,10 @@ function App() {
         <div style={{ padding: '2rem', textAlign: 'center' }}>
           <h2>🔧 Kanban Checking – Coming Soon</h2>
         </div>
+      )}
+
+      {activeTab === 'home' && (
+        <HomePage />
       )}
     </div>
   );

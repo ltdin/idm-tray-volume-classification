@@ -11,8 +11,7 @@ models/
 *.pt
 *.png
 *.csv
-*.pt
-*.h5
+*.pth
 volume_dataset/
 output/
 venv/
