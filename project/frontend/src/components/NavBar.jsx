@@ -18,8 +18,7 @@ function NavBar({ onOptionSelect }) {
     ],
     support: [
       { title: 'Drivers & Downloads', items: ['Auto-update your Drivers', 'Download Center'] },
-            { title: 'Support For', items: ['Products', 'Developers', 'Suppliers'] }
-
+      { title: 'Support For', items: ['Products', 'Developers', 'Suppliers'] }
     ],
     solutions: [
       { title: 'Industries', items: ['Automotive', 'Education','Energy','Financial Services', 'Government'] }
@@ -37,11 +36,10 @@ function NavBar({ onOptionSelect }) {
 
   const getTabStyle = (key) => ({
     padding: '0.5rem 1rem',
-    color: '#0068b5',
+    color: openTab === key ? '#000' : '#0068b5',
     fontSize: '0.9rem',
     cursor: 'pointer',
     position: 'relative',
-    color: openTab === key ? '#000' : '#0068b5',
     borderBottom: openTab === key ? '2px solid #0068b5' : '2px solid transparent',
     fontWeight: openTab === key ? 'bold' : 'normal'
   });
@@ -60,7 +58,6 @@ function NavBar({ onOptionSelect }) {
     gap: '3rem',
     flexWrap: 'wrap'
   };
-
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -83,7 +80,7 @@ function NavBar({ onOptionSelect }) {
         alt="Intel"
         height="28"
         style={{ cursor: 'pointer', marginRight: '2rem' }}
-        onClick={() => onOptionSelect('home')}
+        onClick={() => onOptionSelect({ section: 'home', item: 'home' })}
       />
       {tabs.map(tab => (
         <div
@@ -100,11 +97,17 @@ function NavBar({ onOptionSelect }) {
           {megaMenuContent[openTab].map((col, idx) => (
             <div key={idx} style={{ minWidth: '150px' }}>
               <p style={{ fontSize: '0.9rem', fontWeight: 'bold' }}>{col.title}</p>
-              <ul style={{ fontSize: '0.8rem', color: '#0068b5',listStyle: 'none', padding: 0, margin: 0 }}>
+              <ul style={{ fontSize: '0.8rem', color: '#0068b5', listStyle: 'none', padding: 0, margin: 0 }}>
                 {col.items.map((item, i) => (
-                  <li key={i}
+                  <li
+                    key={i}
                     style={{ padding: '0.2rem 0', cursor: 'pointer', fontSize: '0.9rem' }}
-                    onClick={() => onOptionSelect(item)}>
+                    onClick={() => onOptionSelect({
+                      section: openTab,
+                      title: col.title,
+                      item
+                    })}
+                  >
                     {item}
                   </li>
                 ))}

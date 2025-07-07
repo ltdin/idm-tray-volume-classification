@@ -25,7 +25,7 @@ os.makedirs(boxed_dir, exist_ok=True)
 os.makedirs(masked_dir, exist_ok=True)
 
 image_paths = glob.glob(os.path.join(image_dir, "*.jpg"))
-print(f"🔍 Found {len(image_paths)} images.")
+print(f"[OK] Found {len(image_paths)} images.")
 
 for image_path in image_paths:
     image = cv2.imread(image_path)
@@ -46,21 +46,55 @@ for image_path in image_paths:
             break
 
     if zone_poly is None:
-        print(f"⚠ No kanban zone found in {image_path}")
+        print(f"[ERROR] No kanban zone found in {image_path}")
         continue
 
+    # Tính bounding box của polygon
     x_min, y_min, x_max, y_max = zone_poly.bounds
     input_box = np.array([x_min, y_min, x_max, y_max])
 
-    masks, scores, logits = predictor.predict(box=input_box, multimask_output=False)
-    mask = masks[0]
+    # Tính center point của polygon
+    seg_np = np.array(zone_poly.exterior.coords)
+    center_x = np.mean(seg_np[:, 0])
+    center_y = np.mean(seg_np[:, 1])
+
+    point_coords = np.array([[center_x, center_y]])
+    point_labels = np.array([1])   # 1 = foreground
+
+    print(f"[OK] Image: {image_path}")
+    print(f"[OK] Box: {input_box}")
+    print(f"[OK] Point prompt: {point_coords}")
+
+    # Predict mask với cả box + point prompt
+    masks, scores, logits = predictor.predict(
+        point_coords=point_coords,
+        point_labels=point_labels,
+        box=input_box,
+        multimask_output=True
+    )
+
+    # Lấy mask tốt nhất (mask có diện tích lớn nhất)
+    best_mask = None
+    max_area = 0
+    for m in masks:
+        area = np.sum(m)
+        if area > max_area:
+            max_area = area
+            best_mask = m
+
+    if best_mask is None:
+        print("[ERROR] No valid mask found")
+        continue
+
+    # Áp mask lên ảnh
     masked_img = image.copy()
-    masked_img[~mask] = 0
+    masked_img[~best_mask] = 0
 
     file_stem = os.path.splitext(os.path.basename(image_path))[0]
     cv2.imwrite(os.path.join(masked_dir, f"{file_stem}_masked.png"), masked_img)
 
-    contours, _ = cv2.findContours(mask.astype(np.uint8), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    # Tìm contour object bên trong mask
+    contours, _ = cv2.findContours(best_mask.astype(np.uint8), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
     for cnt in contours:
         if cv2.contourArea(cnt) > 3000:
@@ -79,5 +113,6 @@ for image_path in image_paths:
             cv2.putText(image, label, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.7, color, 2)
 
     cv2.imwrite(os.path.join(boxed_dir, f"{file_stem}_boxed.png"), image)
+    print(f"[OK] Processed {image_path}")
 
-print("✅ All done!")
+print("[OK] All done!")

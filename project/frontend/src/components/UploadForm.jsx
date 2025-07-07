@@ -2,14 +2,15 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import SearchIcon from '@mui/icons-material/Search';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutline';
 import Tooltip from '@mui/material/Tooltip';
+import ImagePreview from './ImagePreview';
 
-function UploadForm({ onRackIdImageChange, rackIdText, onImageChange, onSubmit }) {
+function UploadForm({ onRackIdImageChange, rackIdText, rackIdImage, onImageChange, onSubmit }) {
   return (
-    <div style={{ textAlign: 'center', position: 'relative'}}>
-       <div style={{ position: 'absolute', top: 10, left: 10 }}>
+    <div style={{ textAlign: 'center', position: 'relative' }}>
+      <div style={{ position: 'absolute', top: 10, left: 10 }}>
         <Tooltip
           title={
-            <span style={{ fontSize: '0.9rem'}}>
+            <span style={{ fontSize: '1rem' }}>
               1. Click green button to upload Tray's ID image.<br />
               2. Click Upload Icon button to upload one or more rack images.<br />
               3. Click Search icon to start prediction
@@ -21,6 +22,7 @@ function UploadForm({ onRackIdImageChange, rackIdText, onImageChange, onSubmit }
           <InfoOutlinedIcon style={{ color: '#0068b5', cursor: 'pointer' }} />
         </Tooltip>
       </div>
+
       <div style={{ marginBottom: '1rem' }}>
         <label htmlFor="rack-id-upload"
           style={{
@@ -43,6 +45,18 @@ function UploadForm({ onRackIdImageChange, rackIdText, onImageChange, onSubmit }
             onChange={(e) => onRackIdImageChange(e.target.files[0])}
           />
         </label>
+        {rackIdImage && (
+          <div style={{ marginTop: '1rem' }}>
+            <ImagePreview src={URL.createObjectURL(rackIdImage)} />
+          </div>
+        )}
+        {rackIdText && (
+          <p style={{ marginTop: '0.5rem', fontSize: '0.9rem' }}>
+            Selected Rack ID Image: <strong>{rackIdText}</strong>
+          </p>
+        )}
+
+
 
       </div>
 
