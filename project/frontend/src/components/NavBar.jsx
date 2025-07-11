@@ -8,12 +8,13 @@ function NavBar({ onOptionSelect }) {
     { key: 'masterprogram', label: 'MASTER PROGRAM' },
     { key: 'support', label: 'SUPPORT' },
     { key: 'solutions', label: 'SOLUTIONS' },
+    
   ];
 
   const megaMenuContent = {
     masterprogram: [
-      { title: 'IDM Inventory Management', items: ['Training/Fining Tune Model','Validation'] },
-      { title: '5S Auto Audit', items: ['Training/Fining Tune Model', 'Validation'] },
+      { title: 'IDM Inventory Management', items: ['Fine Tune Model','Validation'] },
+      { title: '5S Auto Audit', items: ['Training/Fine Tune Model', 'Validation'] },
       { title: 'Settings Robot Schedule ', items: ['Dynamic Boston Spot'] },
     ],
     support: [

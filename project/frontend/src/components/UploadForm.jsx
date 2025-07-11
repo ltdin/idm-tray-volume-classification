@@ -1,19 +1,32 @@
+import React from 'react';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import SearchIcon from '@mui/icons-material/Search';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutline';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Tooltip from '@mui/material/Tooltip';
-import ImagePreview from './ImagePreview';
+import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 
-function UploadForm({ onRackIdImageChange, rackIdText, rackIdImage, onImageChange, onSubmit }) {
+function UploadForm({
+  onRackIdImageChange,
+  onImageChange,
+  onSubmit
+}) {
   return (
-    <div style={{ textAlign: 'center', position: 'relative' }}>
-      <div style={{ position: 'absolute', top: 10, left: 10 }}>
+    <div style={{ flex: '2' }}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.5rem',
+          marginBottom: '1rem'
+        }}
+      >
+        <h2 style={{ color: '#0068b5', margin: 0 }}>Tray Counting</h2>
         <Tooltip
           title={
             <span style={{ fontSize: '1rem' }}>
-              1. Click green button to upload Tray's ID image.<br />
-              2. Click Upload Icon button to upload one or more rack images.<br />
-              3. Click Search icon to start prediction
+              1. Click Upload Rack ID Image to upload a single rack ID image.<br />
+              2. Click Upload Rack Images to upload one or more rack images.<br />
+              3. Click Checking to start prediction.
             </span>
           }
           placement="right"
@@ -23,12 +36,29 @@ function UploadForm({ onRackIdImageChange, rackIdText, rackIdImage, onImageChang
         </Tooltip>
       </div>
 
-      <div style={{ marginBottom: '1rem' }}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          marginBottom: '1rem',
+          gap: '1rem'
+        }}
+      >
+        <label
+          htmlFor="rack-id-upload"
+          style={{
+            minWidth: '180px',
+            color: '#333',
+            fontWeight: 'bold'
+          }}
+        >
+          Upload Rack ID Image
+        </label>
+
         <label htmlFor="rack-id-upload"
           style={{
             padding: '0.6rem 1.2rem',
-            backgroundColor: '#28a745',
-            color: 'white',
+            color: '#0068b5',
             border: 'none',
             borderRadius: '8px',
             cursor: 'pointer',
@@ -36,7 +66,7 @@ function UploadForm({ onRackIdImageChange, rackIdText, rackIdImage, onImageChang
             alignItems: 'center',
             gap: '0.5rem'
           }}>
-          Upload Rack ID Image
+          <AddCircleOutlineRoundedIcon />
           <input
             id="rack-id-upload"
             type="file"
@@ -45,62 +75,69 @@ function UploadForm({ onRackIdImageChange, rackIdText, rackIdImage, onImageChang
             onChange={(e) => onRackIdImageChange(e.target.files[0])}
           />
         </label>
-        {rackIdImage && (
-          <div style={{ marginTop: '1rem' }}>
-            <ImagePreview src={URL.createObjectURL(rackIdImage)} />
-          </div>
-        )}
-        {rackIdText && (
-          <p style={{ marginTop: '0.5rem', fontSize: '0.9rem' }}>
-            Selected Rack ID Image: <strong>{rackIdText}</strong>
-          </p>
-        )}
-
-
-
       </div>
 
-      <label htmlFor="file-upload"
+      <div
         style={{
-          marginLeft: '1rem',
-          padding: '0.6rem 1.2rem',
-          backgroundColor: '#0068b5',
-          color: 'white',
-          border: 'none',
-          borderRadius: '8px',
-          cursor: 'pointer',
-          display: 'inline-flex',
+          display: 'flex',
           alignItems: 'center',
-          gap: '0.5rem'
-        }}>
-        <CloudUploadIcon />
-        <input
-          id="file-upload"
-          type="file"
-          accept="image/*"
-          multiple
-          style={{ display: 'none' }}
-          onChange={(e) => onImageChange(Array.from(e.target.files))}
-        />
-      </label>
-
-      <button
-        onClick={onSubmit}
-        style={{
-          marginLeft: '1rem',
-          padding: '0.6rem 1.2rem',
-          backgroundColor: '#0068b5',
-          color: 'white',
-          border: 'none',
-          borderRadius: '8px',
-          cursor: 'pointer',
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '0.5rem'
+          marginBottom: '1rem',
+          gap: '1rem'
         }}
       >
-        <SearchIcon />
-      </button>
+        <label
+          htmlFor="rack-images-upload"
+          style={{
+            minWidth: '180px',
+            color: '#333',
+            fontWeight: 'bold'
+          }}
+        >
+          Upload Rack Images
+        </label>
+
+        <label htmlFor="rack-images-upload"
+          style={{
+            padding: '0.6rem 1.2rem',
+            color: '#0068b5',
+            border: 'none',
+            borderRadius: '8px',
+            cursor: 'pointer',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.5rem'
+          }}>
+          <AddCircleOutlineRoundedIcon />
+          <input
+            id="rack-images-upload"
+            type="file"
+            accept="image/*"
+            multiple
+            style={{ display: 'none' }}
+            onChange={(e) => onImageChange(Array.from(e.target.files))}
+          />
+        </label>
+      </div>
+
+      {/* Checking Button */}
+      <div style={{ marginTop: '1rem' }}>
+        <button
+          onClick={onSubmit}
+          style={{
+            padding: '0.6rem 1.2rem',
+            backgroundColor: '#0068b5',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.5rem'
+          }}
+        >
+          Checking
+        </button>
+      </div>
     </div>
   );
 }

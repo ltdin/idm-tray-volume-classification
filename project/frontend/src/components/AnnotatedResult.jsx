@@ -5,8 +5,18 @@ function AnnotatedResult({ imageUrl }) {
 
   return (
     <div style={{ marginTop: '1rem' }}>
-      <h4>Annotated Result:</h4>
-      <img src={imageUrl} alt="Result" width={300} />
+      <img
+        src={imageUrl}
+        alt="Result"
+        style={{
+          width: '100%',
+          height: 'auto',
+          objectFit: 'cover',
+          borderRadius: '8px',
+          border: '1px solid #ccc',
+          display: 'block'
+        }}
+      />
     </div>
   );
 }

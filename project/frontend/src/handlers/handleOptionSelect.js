@@ -15,8 +15,12 @@ const handleOptionSelect = (option, setActiveTab) => {
     setActiveTab('kanban');
   } else if (option.item === 'home') {
     setActiveTab('home');
+  } else if (option.section === 'masterprogram' &&
+    option.title === 'IDM Inventory Management' &&
+    option.item === 'Fine Tune Model') {
+    setActiveTab('fine-tune');
   } else {
-    alert(`Bạn vừa bấm vào: ${option.item}`);
+    alert(`You are clicking to: ${option.item}`);
   }
 };
 

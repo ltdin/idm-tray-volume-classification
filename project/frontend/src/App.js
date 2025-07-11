@@ -5,6 +5,7 @@ import TrayCountingPage from './pages/TrayCountingPage';
 import handleOptionSelect from './handlers/handleOptionSelect';
 import KanbanPage from './pages/KanbanPage';
 import IDMFineTunePage from './pages/IDMFineTunePage';
+
 function App() {
   const [activeTab, setActiveTab] = useState('home');
   const [images, setImages] = useState([]);
@@ -44,7 +45,9 @@ function App() {
 
       {activeTab === 'kanban' && <KanbanPage />}
 
-      {activeTab === 'home' && <IDMFineTunePage />}
+      {activeTab === 'home' && <HomePage />}
+
+      {activeTab === 'fine-tune' && <IDMFineTunePage />}
     </div>
   );
 }

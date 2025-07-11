@@ -1,8 +1,8 @@
 task: detect
 mode: train
-model: ../models/best.pt
-data: ../../../scripts/IDM Tray Counting/data_preprocessed/data.yaml
-epochs: 1
+model: yolov8n.pt
+data: ../data_preprocessed/data.yaml
+epochs: 100
 time: null
 patience: 100
 batch: 8
@@ -12,8 +12,8 @@ save_period: -1
 cache: false
 device: cpu
 workers: 8
-project: ../../../scripts/IDM Tray Counting/rack_detect/results
-name: train
+project: ../rack_detect/results
+name: train4
 exist_ok: false
 pretrained: true
 optimizer: auto
@@ -102,4 +102,4 @@ auto_augment: randaugment
 erasing: 0.4
 cfg: null
 tracker: botsort.yaml
-save_dir: ..\..\..\scripts\IDM Tray Counting\rack_detect\results\train
+save_dir: ..\rack_detect\results\train4

@@ -15,6 +15,8 @@ STATIC_FOLDER = "static"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
+
+
 @app.route("/predict", methods=["POST"])
 def predict():
     if "images" not in request.files:
@@ -63,6 +65,7 @@ def ocr_check():
         "expected_id": expected_id,
         "extracted_text": extracted_id
     })
+    
 
 if __name__ == "__main__":
     app.run(debug=True)

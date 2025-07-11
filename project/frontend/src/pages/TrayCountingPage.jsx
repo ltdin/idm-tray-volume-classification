@@ -1,11 +1,50 @@
 import React from 'react';
 import UploadForm from '../components/UploadForm';
-import ImagePreview from '../components/ImagePreview';
 import AnnotatedResult from '../components/AnnotatedResult';
 import ResultTable from '../components/ResultTable';
+import ImagePreviewPanel from '../components/ImagePreviewPanel';
 import handleImageChange from '../handlers/handleImageChange';
 import handleSubmit from '../handlers/handleSubmit';
 import handleRackIdImageChange from '../handlers/handleRackIdImageChange';
+
+const RackIdPanel = ({ rackIdImage, rackIdText }) => {
+  return (
+    <div style={{
+      flex: 1,
+      borderLeft: '2px solid #e0e0e0',
+      paddingLeft: '2rem'
+    }}>
+      <h3 style={{ color: '#0068b5' }}>Rack ID Image</h3>
+      {rackIdImage ? (
+        <>
+          <img
+            src={URL.createObjectURL(rackIdImage)}
+            alt="Rack ID"
+            style={{
+              width: '100%',
+              height: 'auto',
+              borderRadius: '8px',
+              border: '1px solid #ccc'
+            }}
+          />
+          {rackIdText && (
+            <p style={{
+              fontSize: '0.85rem',
+              marginTop: '0.5rem',
+              color: '#555'
+            }}>
+              {rackIdText}
+            </p>
+          )}
+        </>
+      ) : (
+        <p style={{ color: '#777', fontSize: '0.9rem' }}>
+          No Rack ID image selected.
+        </p>
+      )}
+    </div>
+  );
+};
 
 function TrayCounting({
   images,
@@ -39,33 +78,33 @@ function TrayCounting({
           boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
         }}
       >
-        <UploadForm
-  onRackIdImageChange={(file) =>
-    handleRackIdImageChange(file, setRackIdImage, setRackIdText)
-  }
-  rackIdText={rackIdText}
-  rackIdImage={rackIdImage}
-  onImageChange={(files) =>
-    handleImageChange(files, setImages, setPreviews, setResults)
-  }
-  onSubmit={() =>
-    handleSubmit(images, setResults, rackIdText)
-  }
-/>
+        <div style={{
+          display: 'flex',
+          gap: '2rem',
+          alignItems: 'flex-start'
+        }}>
+          <div style={{ flex: 1 }}>
+            <UploadForm
+              onRackIdImageChange={(file) =>
+                handleRackIdImageChange(file, setRackIdImage, setRackIdText)
+              }
+              onImageChange={(files) =>
+                handleImageChange(files, setImages, setPreviews, setResults)
+              }
+              onSubmit={() =>
+                handleSubmit(images, setResults, rackIdText)
+              }
+            />
+          </div>
 
-        <div
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: '1rem',
-            justifyContent: 'center',
-            marginTop: '1rem',
-          }}
-        >
-          {Array.isArray(previews) &&
-            previews.map((src, index) => (
-              <ImagePreview key={index} src={src} />
-            ))}
+          <RackIdPanel rackIdImage={rackIdImage} rackIdText={rackIdText} />
+
+          <div style={{
+            flex: 2,
+            paddingLeft: '2rem'
+          }}>
+            <ImagePreviewPanel previewUrls={previews} yoloImages={images} />
+          </div>
         </div>
       </div>
 
@@ -93,22 +132,20 @@ function TrayCounting({
               </h4>
 
               <div
-                style={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  gap: '2rem',
-                  justifyContent: 'center',
-                }}
-              >
-                {groupItems.map((res, idx) => (
-                  <div
-                    key={idx}
-                    style={{ flex: '1 1 45%' }}
-                  >
-                    <AnnotatedResult imageUrl={res.annotated_path} />
-                  </div>
-                ))}
-              </div>
+  style={{
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+    gap: '1rem',
+    justifyContent: 'flex-start'
+  }}
+>
+  {groupItems.map((res, idx) => (
+    <div key={idx}>
+      <AnnotatedResult imageUrl={res.annotated_path} />
+    </div>
+  ))}
+</div>
+
 
               <div style={{ marginTop: '1rem' }}>
                 <ResultTable

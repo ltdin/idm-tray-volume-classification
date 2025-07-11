@@ -3,19 +3,19 @@ import React from 'react';
 const ImagePreviewPanel = ({ previewUrls, yoloImages }) => (
   <div style={{
     flex: '1',
-    maxWidth: '400px',
-    borderLeft: '2px solid #e0e0e0',
-    paddingLeft: '2rem'
   }}>
     <h3 style={{ color: '#0068b5' }}>Image Preview</h3>
     {previewUrls.length === 0 && (
-      <p style={{ fontSize: '0.9rem', color: '#777' }}>No images selected.</p>
+      <p style={{ fontSize: '0.9rem', color: '#777' }}>
+        No images selected.
+      </p>
     )}
     <div
       style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))',
-        gap: '1rem'
+        gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 140px))',
+        gap: '1rem',
+        justifyContent: 'flex-start'
       }}
     >
       {previewUrls.map((url, idx) => (
@@ -25,9 +25,11 @@ const ImagePreviewPanel = ({ previewUrls, yoloImages }) => (
             alt={`Preview ${idx}`}
             style={{
               width: '100%',
-              height: 'auto',
+              height: '100px',
               borderRadius: '8px',
-              border: '1px solid #ccc'
+              border: '1px solid #ccc',
+              objectFit: 'cover',
+              display: 'block'
             }}
           />
           <p style={{

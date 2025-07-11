@@ -37,7 +37,7 @@ class TrayVolumeDataset(Sequence):
             img_path = os.path.join(self.img_dir, row["filename"])
             img = load_img(img_path, target_size=self.img_size)
             img = img_to_array(img)
-            img = preprocess_input(img)  # ← MobileNetV2 specific preprocessing
+            img = preprocess_input(img) 
             images.append(img)
             labels.append(float(row["label"]) / 100.0)
         return np.array(images), np.array(labels)
