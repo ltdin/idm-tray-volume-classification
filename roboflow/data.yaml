@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 1
+names: ['rack']
+
+roboflow:
+  workspace: l-thnh-vinh-j9hig
+  project: test-tray-counting
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/l-thnh-vinh-j9hig/test-tray-counting/dataset/1
