@@ -9,7 +9,7 @@ def create_blue_mask(image, lower_hsv=[100, 150, 50], upper_hsv=[120, 255, 240])
     mask = cv2.inRange(hsv, lower, upper)
 
     # Morphological cleaning
-    kernel = np.ones((5,5), np.uint8)
+    kernel = np.ones((3,3), np.uint8)
     mask_clean = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
     mask_clean = cv2.morphologyEx(mask_clean, cv2.MORPH_OPEN, kernel)
 

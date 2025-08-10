@@ -3,11 +3,7 @@ import numpy as np
 from kanban_utils.image_io import read_image
 
 def print_hsv_value(img, scale=0.3):
-    """
-    Click chuột vào ảnh để in ra giá trị HSV tại pixel.
-    Scale ảnh nhỏ lại nếu quá to.
-    """
-    # Resize ảnh
+    # Resize image for easier viewing
     h, w = img.shape[:2]
     new_size = (int(w * scale), int(h * scale))
     img_resized = cv2.resize(img, new_size)
@@ -20,10 +16,10 @@ def print_hsv_value(img, scale=0.3):
             
             hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
             pixel = hsv[orig_y, orig_x]
-            print(f"HSV tại pixel gốc ({orig_x},{orig_y}) = {pixel}")
+            print(f"HSV in origin pixel ({orig_x},{orig_y}) = {pixel}")
 
-    cv2.imshow("Click để lấy HSV", img_resized)
-    cv2.setMouseCallback("Click để lấy HSV", callback)
+    cv2.imshow("Click to select HSV", img_resized)
+    cv2.setMouseCallback("Click to select HSV", callback)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 

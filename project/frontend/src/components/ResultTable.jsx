@@ -9,6 +9,7 @@ function ResultTable({ data }) {
           <tr>
             <th>Rack ID</th>
             <th>Volume (%)</th>
+            <th>Quantity (Max: 1161)</th>
           </tr>
         </thead>
         <tbody>
@@ -16,6 +17,7 @@ function ResultTable({ data }) {
             <tr key={index}>
               <td>{rack.rack_id}</td>
               <td>{rack.volume.toFixed(2)}</td>
+              <td>{rack.quantity}</td>
             </tr>
           ))}
         </tbody>

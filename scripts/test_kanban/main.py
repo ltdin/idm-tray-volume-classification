@@ -6,18 +6,24 @@ from kanban_utils.utils import combine_images
 from kanban_utils.line_detection import detect_lines, draw_lines
 
 def main():
-    path = "../../DSC01294.jpg"
+    path = "../../DSC01307.jpg"
+    focus_bottom_only = True  # Toggle this to limit mask to bottom half only
 
-    # STEP 1 - Đọc ảnh gốc
+    # Read image
     image = read_image(path)
 
-    # STEP 2 - Cân bằng sáng CLAHE
+    # Apply CLAHE
     image_enhanced = enhance_clahe(image)
 
-    # STEP 3 - Tạo mask tape xanh
+    # Create blue tape mask
     mask = create_blue_mask(image_enhanced)
 
-    # STEP 4 - Tìm contour polygon
+    if focus_bottom_only:
+        # Zero out the top half of the mask
+        h, w = mask.shape
+        mask[:h // 2, :] = 0
+
+    # Find contour polygon
     polygon, approx_pts = find_largest_contour_polygon(mask)
 
     if polygon is not None:
@@ -25,11 +31,11 @@ def main():
     else:
         image_with_poly = image_enhanced.copy()
 
-    # STEP 5 - Tìm các lines bằng Hough Transform
+    # Find lines using Hough Transform
     lines = detect_lines(mask)
     image_with_lines = draw_lines(image_enhanced, lines)
 
-    # Combine all 4 images để xem cùng lúc
+    # Combine all 4 images to view at once
     combined = combine_images(
         [image, image_enhanced, mask, image_with_lines],
         grid_shape=(2,2),

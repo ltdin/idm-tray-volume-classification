@@ -32,6 +32,8 @@ def run_prediction(image_path, prefix="rack", start_index=1):
             pred = cnn_model.predict(input_img)[0][0] * 100
             pred = np.clip(pred, 0, 100)
 
+            quantity = round(1161 * pred / 100)
+
             label = f"Rack: {pred:.2f}%"
             cv2.rectangle(original, (x1, y1), (x2, y2), (255, 0, 0), 4)
             text_y = max(30, y1 - 10)
@@ -39,10 +41,11 @@ def run_prediction(image_path, prefix="rack", start_index=1):
                         cv2.FONT_HERSHEY_SIMPLEX, 1.2, (255, 0, 0), 3)
 
             volume_data.append({
-            "rack_id": f"{prefix} No.{start_index + i}",
-            "bbox": [x1, y1, x2, y2],
-            "volume": round(float(pred), 2)
-        })
+                "rack_id": f"{prefix} No.{start_index + i}",
+                "bbox": [x1, y1, x2, y2],
+                "volume": round(float(pred), 2),
+                "quantity": quantity
+            })
 
         except Exception as e:
             print(f"[ERROR] Error with box {i+1}: {e}")
@@ -56,5 +59,4 @@ def run_prediction(image_path, prefix="rack", start_index=1):
     return {
         "racks": volume_data,
         "annotated_path": f"http://localhost:5000/output/{save_name}"
-}
-
+    }
