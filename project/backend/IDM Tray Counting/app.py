@@ -8,15 +8,19 @@ from database import versions_collection
 import pandas as pd
 import shutil
 from flask_cors import CORS
+from predict_core import run_prediction
 
 app = Flask(__name__)
 CORS(app)
 
 UPLOAD_FOLDER_IMAGES = './uploads/yolo_images'
 UPLOAD_FOLDER_LABELS = './uploads/yolo_labels'
-
+UPLOAD_FOLDER_PREDICT = "upload"
+OUTPUT_FOLDER_PREDICT = "output"
 os.makedirs(UPLOAD_FOLDER_IMAGES, exist_ok=True)
 os.makedirs(UPLOAD_FOLDER_LABELS, exist_ok=True)
+os.makedirs(UPLOAD_FOLDER_PREDICT, exist_ok=True)
+os.makedirs(OUTPUT_FOLDER_PREDICT, exist_ok=True)
 
 @app.route("/api/training/upload", methods=["POST"])
 def upload_training_data():
@@ -147,6 +151,33 @@ def delete_version():
 @app.route("/models/<path:filename>")
 def serve_models(filename):
     return send_from_directory('../models', filename)
+
+@app.route("/predict", methods=["POST"])
+def predict():
+    if "images" not in request.files:
+        return jsonify({"error": "No images uploaded"}), 400
+
+    files = request.files.getlist("images")
+    rack_id_prefix = request.form.get("rack_id", "rack")
+    results = []
+
+    global_rack_counter = 1
+
+    for file in files:
+        filename = f"{uuid.uuid4().hex}.jpg"
+        upload_path = os.path.join(UPLOAD_FOLDER_PREDICT, filename)
+        file.save(upload_path)
+        result = run_prediction(upload_path, prefix=rack_id_prefix, start_index=global_rack_counter)
+        global_rack_counter += len(result.get("racks", []))
+
+        result["filename"] = filename
+        results.append(result)
+
+    return jsonify({"results": results})
+
+@app.route("/output/<path:filename>")
+def serve_output(filename):
+    return send_from_directory(OUTPUT_FOLDER_PREDICT, filename)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5001, debug=True)

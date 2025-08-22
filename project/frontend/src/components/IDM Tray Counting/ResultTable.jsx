@@ -3,7 +3,7 @@ function ResultTable({ data }) {
 
   return (
     <div style={{ marginTop: '2rem' }}>
-      <h4>Prediction Table:</h4>
+       <h3 style={{ color: '#0068b5' }}>Result Table</h3>
       <table border="1" cellPadding="10">
         <thead>
           <tr>

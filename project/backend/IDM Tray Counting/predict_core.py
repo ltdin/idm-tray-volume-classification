@@ -8,8 +8,8 @@ from tensorflow.keras.preprocessing.image import img_to_array
 import uuid
 
 # Load models once
-yolo_model = YOLO("models/best.pt")
-cnn_model = load_model("models/volume_mobilenetv2_model.h5")
+yolo_model = YOLO("../models/best.pt")
+cnn_model = load_model("../models/volume_mobilenetv2_model.h5")
 
 def run_prediction(image_path, prefix="rack", start_index=1):
     original = cv2.imread(image_path)
@@ -58,5 +58,5 @@ def run_prediction(image_path, prefix="rack", start_index=1):
 
     return {
         "racks": volume_data,
-        "annotated_path": f"http://localhost:5000/output/{save_name}"
+        "annotated_path": f"http://localhost:5001/output/{save_name}"
     }

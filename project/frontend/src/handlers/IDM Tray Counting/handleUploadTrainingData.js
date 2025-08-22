@@ -1,5 +1,5 @@
 import { validateUploadData } from './validateUploadData';
-import { uploadTrainingDataApi } from '../api/trainingAPI';
+import { uploadTrainingDataApi } from '../../api/trainingAPI';
 
 export const handleUploadTrainingData = async (
   yoloImages,

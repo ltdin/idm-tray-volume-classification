@@ -39,7 +39,7 @@ for i, box in enumerate(boxes):
 
         # Draw bounding box and label using cv2
         label = f"Rack: {pred:.2f}%"
-        color = (255, 0, 0)  # Blue in BGR
+        color = (255, 0, 0)  
 
         cv2.rectangle(original, (x1, y1), (x2, y2), color, 4)
         text_y = max(30, y1 - 10)

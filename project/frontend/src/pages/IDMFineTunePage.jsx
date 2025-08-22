@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import FineTuneForm from '../components/FineTuneForm';
-import ImagePreviewPanel from '../components/ImagePreviewPanel';
-import { handleYoloImageChange } from '../handlers/handleYoloImageChange';
-import { handleYoloLabelChange } from '../handlers/handleYoloLabelChange';
-import { handleUploadTrainingData } from '../handlers/handleUploadTrainingData';
-import { handleRetrainModels } from '../handlers/handleRetrainModels';
-import ModelVersionsPanel from '../components/ModelVersionsPanel';
-import LabelPreviewPanel from '../components/LabelPreviewPanel';
+import FineTuneForm from '../components/IDM Tray Counting/FineTuneForm';
+import ImagePreviewPanel from '../components/IDM Tray Counting/ImagePreviewPanel';
+import { handleYoloImageChange } from '../handlers/IDM Tray Counting/handleYoloImageChange';
+import { handleYoloLabelChange } from '../handlers/IDM Tray Counting/handleYoloLabelChange';
+import { handleUploadTrainingData } from '../handlers/IDM Tray Counting/handleUploadTrainingData';
+import { handleRetrainModels } from '../handlers/IDM Tray Counting/handleRetrainModels';
+import ModelVersionsPanel from '../components/IDM Tray Counting/ModelVersionsPanel';
+import LabelPreviewPanel from '../components/IDM Tray Counting/LabelPreviewPanel';
 
 function IDMFineTunePage() {
   const [yoloImages, setYoloImages] = useState([]);

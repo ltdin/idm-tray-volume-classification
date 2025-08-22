@@ -12,14 +12,16 @@ WHEEL_MODEL  = r"../test_kanban/wheels_seg3/wheels_seg3/weights/best.pt"
 # Upload 3 folders image for testing
 INPUT_DIRS = [
     r"../test_kanban/OneDrive_2025-08-17/kanban image for logic test ( 3 cases)/just straight line/",
-    r"../test_kanban/OneDrive_2025-08-17/kanban image for logic test ( 3 cases)/rectangular angle//",
-    r"../test_kanban/OneDrive_2025-08-17/kanban image for logic test ( 3 cases)/rectangular straight//",
+    r"../test_kanban/OneDrive_2025-08-17/kanban image for logic test ( 3 cases)/rectangular angle/",
+    r"../test_kanban/OneDrive_2025-08-17/kanban image for logic test ( 3 cases)/rectangular straight/",
+    r"../test_kanban/OneDrive_2025-08-17/kanban image for logic test ( 3 cases)/L shape/",
+
 ]
 
 # Get output directory
 OUTPUT_DIR = Path("runs/kanban/predict")
 IMGSZ = 640
-CONF  = 0.7
+CONF  = 0.5
 
 # BGR color
 COLOR_IN   = (255,  0,  0) 
@@ -112,7 +114,7 @@ def process_image(img_path: Path, zone_model: YOLO, wheel_model: YOLO, out_dir: 
     n_wheels = len(wres.boxes.xyxy) if wres.boxes is not None else 0
 
     # Draw zone polygon
-    draw_polygon(img, zone_poly, COLOR_ZONE, thickness=2)
+    # draw_polygon(img, zone_poly, COLOR_ZONE, thickness=2)
 
     # Check each wheel
     print(f"\n[IMAGE] {img_path.name}  |  Wheels: {n_wheels}")

@@ -1,19 +1,19 @@
-task: segment
+task: detect
 mode: train
-model: yolov8n-seg.pt
-data: ../5S Audit Kanban Zone/kanban_dataset/data.yaml
-epochs: 100
+model: ../models\version\best.pt
+data: ../../../scripts/IDM Tray Counting/data_preprocessed/data.yaml
+epochs: 1
 time: null
 patience: 100
 batch: 8
-imgsz: 640
+imgsz: 448
 save: true
 save_period: -1
 cache: false
 device: cpu
 workers: 8
-project: ../5S Audit Kanban Zone/results
-name: yolov8_kanban_zone
+project: ../../../scripts/IDM Tray Counting/rack_detect/results
+name: train8
 exist_ok: false
 pretrained: true
 optimizer: auto
@@ -102,4 +102,4 @@ auto_augment: randaugment
 erasing: 0.4
 cfg: null
 tracker: botsort.yaml
-save_dir: ..\5S Audit Kanban Zone\results\yolov8_kanban_zone
+save_dir: ..\..\..\scripts\IDM Tray Counting\rack_detect\results\train8

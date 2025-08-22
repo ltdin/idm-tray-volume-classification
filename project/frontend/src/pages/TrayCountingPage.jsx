@@ -1,11 +1,11 @@
 import React from 'react';
-import UploadForm from '../components/UploadForm';
-import AnnotatedResult from '../components/AnnotatedResult';
-import ResultTable from '../components/ResultTable';
-import ImagePreviewPanel from '../components/ImagePreviewPanel';
-import handleImageChange from '../handlers/handleImageChange';
-import handleSubmit from '../handlers/handleSubmit';
-import handleRackIdImageChange from '../handlers/handleRackIdImageChange';
+import UploadForm from '../components/IDM Tray Counting/UploadForm';
+import AnnotatedResult from '../components/IDM Tray Counting/AnnotatedResult';
+import ResultTable from '../components/IDM Tray Counting/ResultTable';
+import ImagePreviewPanel from '../components/IDM Tray Counting/ImagePreviewPanel';
+import handleImageChange from '../handlers/IDM Tray Counting/handleImageChange';
+import handleSubmit from '../handlers/IDM Tray Counting/handleSubmit';
+import handleRackIdImageChange from '../handlers/IDM Tray Counting/handleRackIdImageChange';
 
 const RackIdPanel = ({ rackIdImage, rackIdText }) => {
   return (
@@ -105,6 +105,7 @@ function TrayCounting({
           }}>
             <ImagePreviewPanel previewUrls={previews} yoloImages={images} />
           </div>
+          
         </div>
       </div>
 
@@ -127,9 +128,14 @@ function TrayCounting({
                 marginBottom: '2rem',
               }}
             >
-              <h4 style={{ marginBottom: '1rem' }}>
+              <div style={{ marginTop: '1rem' }}>
+                <ResultTable
+                  data={groupItems.flatMap((res) => res.racks)}
+                />
+              </div>
+               <h3 style={{ color: '#0068b5' }}>
                 Rack ID Group: {groupId}
-              </h4>
+              </h3>
 
               <div
   style={{
@@ -139,19 +145,13 @@ function TrayCounting({
     justifyContent: 'flex-start'
   }}
 >
+  
   {groupItems.map((res, idx) => (
     <div key={idx}>
       <AnnotatedResult imageUrl={res.annotated_path} />
     </div>
   ))}
-</div>
-
-
-              <div style={{ marginTop: '1rem' }}>
-                <ResultTable
-                  data={groupItems.flatMap((res) => res.racks)}
-                />
-              </div>
+</div>       
             </div>
           ))}
         </div>

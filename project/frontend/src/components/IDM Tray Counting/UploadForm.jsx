@@ -20,7 +20,7 @@ function UploadForm({
           marginBottom: '1rem'
         }}
       >
-        <h2 style={{ color: '#0068b5', margin: 0 }}>Tray Counting</h2>
+        <h2 style={{ color: '#0068b5', margin: 0 }}>IDM Inventory Management</h2>
         <Tooltip
           title={
             <span style={{ fontSize: '1rem' }}>

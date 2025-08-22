@@ -1,4 +1,4 @@
-import { retrainModelsApi } from "../api/trainingAPI";
+import { retrainModelsApi } from "../../api/trainingAPI";
 export const handleRetrainModels = async (setProgress) => {
   try {
     setProgress('Retrain in progress...');
